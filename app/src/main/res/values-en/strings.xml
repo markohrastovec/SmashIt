@@ -4,6 +4,6 @@
   <string name="app_name">SmashIt</string>
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
-  <string name="title_activity_smashing">SmashingActivity</string>
+  <string name="smash_button_label">SmashIt</string>
 
 </resources>
