@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.content.Intent;
 
 
 public class MainActivity extends Activity {
@@ -46,6 +47,11 @@ public class MainActivity extends Activity {
     }
 
     return super.onOptionsItemSelected (item);
+  }
+
+  public void onClick (View view) {
+    Intent goToSmashingActivity = new Intent (this, SmashingActivity.class);
+    startActivity (goToSmashingActivity);
   }
 
   /**
