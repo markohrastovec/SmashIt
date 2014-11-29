@@ -2,10 +2,8 @@
 <resources>
 
   <string name="app_name">Razbijaj</string>
-  <string name="hello_world">Živjo!</string>
   <string name="action_settings">Nastavitve</string>
   <string name="smash_button_label">Start</string>
   <string name="title_activity_smashing">Razbijaj</string>
-  <string name="dummy_content">DUMMY CONTENT</string>
 
 </resources>
