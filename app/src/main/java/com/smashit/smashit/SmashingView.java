@@ -11,30 +11,19 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.smashit.smashit.R;
-
-import java.util.jar.Attributes;
-
 /**
  * View for drawing the smashing on screen
  */
 public class SmashingView extends SurfaceView implements SurfaceHolder.Callback {
   private Bitmap originalBackground;
   private SmashingThread smashingThread;
-  private SurfaceHolder surfaceHolder;
   Context context;
 
   public SmashingView (Context ctxt, AttributeSet attrs) {
     super (ctxt, attrs);
     context = ctxt;
-    surfaceHolder = getHolder ();
-    surfaceHolder.addCallback (this);
+    getHolder ().addCallback (this);
   }
-
-//  @Override
-//  protected void onDraw (Canvas canvas) {
-//    canvas.drawBitmap (originalBackground, 0, 0, null);
-//  }
 
   public static int calculateInSampleSize (BitmapFactory.Options options, int reqWidth, int reqHeight) {
     // Raw height and width of image
@@ -73,8 +62,6 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
 
   @Override
   public void surfaceCreated (SurfaceHolder holder) {
-    int x = this.getWidth ();
-    int y = this.getHeight ();
     originalBackground = decodeSampledBitmapFromResource (getResources (), R.drawable.bricks, this.getWidth (), this.getHeight ());
     //originalBackground = BitmapFactory.decodeResource (getResources (), R.drawable.bricks);
     smashingThread = new SmashingThread (holder, context);
