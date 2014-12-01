@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -28,8 +29,6 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
     context = ctxt;
     surfaceHolder = getHolder ();
     surfaceHolder.addCallback (this);
-    //originalBackground = decodeSampledBitmapFromResource (getResources (), R.drawable.bricks, this.getWidth (), this.getHeight ());
-    originalBackground = BitmapFactory.decodeResource (getResources (), R.drawable.bricks);
   }
 
 //  @Override
@@ -74,6 +73,10 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
 
   @Override
   public void surfaceCreated (SurfaceHolder holder) {
+    int x = this.getWidth ();
+    int y = this.getHeight ();
+    originalBackground = decodeSampledBitmapFromResource (getResources (), R.drawable.bricks, this.getWidth (), this.getHeight ());
+    //originalBackground = BitmapFactory.decodeResource (getResources (), R.drawable.bricks);
     smashingThread = new SmashingThread (holder, context);
     smashingThread.setRunning (true);
     smashingThread.start ();
@@ -100,7 +103,8 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
   }
 
   void doDraw (Canvas canvas) {
-    canvas.drawBitmap (originalBackground, 0, 0, null);
+    RectF rect = new RectF (0, 0, canvas.getWidth (), canvas.getHeight ());
+    canvas.drawBitmap (originalBackground, null, rect, null);
   }
 
   public class SmashingThread extends Thread {
