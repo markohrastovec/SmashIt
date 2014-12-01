@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.smashit.smashit.SettingsActivity$PicturePreferenceFragment"
+        android:title="@string/pref_header_picture" />
+    <header
+        android:fragment="com.smashit.smashit.SettingsActivity$BackgroundThreadPreferenceFragment"
+        android:title="@string/pref_header_background_thread" />
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.smashit.smashit.SettingsActivity2$GeneralPreferenceFragment"
+        android:title="@string/pref_header_general" />
+    <header
+        android:fragment="com.smashit.smashit.SettingsActivity2$NotificationPreferenceFragment"
+        android:title="@string/pref_header_notifications" />
+    <header
+        android:fragment="com.smashit.smashit.SettingsActivity2$DataSyncPreferenceFragment"
+        android:title="@string/pref_header_data_sync" />
+
+</preference-headers>

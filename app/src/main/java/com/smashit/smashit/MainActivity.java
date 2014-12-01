@@ -41,7 +41,8 @@ public class MainActivity extends Activity {
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {
-      return true;
+      Intent goToSettingsActivity = new Intent (this, SettingsActivity.class);
+      startActivity (goToSettingsActivity);
     }
 
     return super.onOptionsItemSelected (item);

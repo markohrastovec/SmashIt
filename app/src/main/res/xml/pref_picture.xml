@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="stretch_proportionally"
+        android:title="@string/pref_title_stretch_proportionally"
+        android:defaultValue="true" />
+
+    <ListPreference
+      android:key="position_picture"
+      android:title="@string/pref_title_position_picture"
+      android:entries="@array/pref_choices_position_picture"
+      android:entryValues="@array/pref_values_position_picture"
+      android:defaultValue="0"
+      android:negativeButtonText="@null"
+      android:positiveButtonText="@null" />
+
+</PreferenceScreen>

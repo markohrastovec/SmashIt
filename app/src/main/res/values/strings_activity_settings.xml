@@ -1,0 +1,30 @@
+<resources>
+  <string name="title_activity_settings">Settings</string>
+
+  <!-- picture settings -->
+  <string name="pref_header_picture">Picture</string>
+
+  <string name="pref_title_stretch_proportionally">Stretch picture proportionally</string>
+  <string name="pref_title_position_picture">Position picture</string>
+
+  <string-array name="pref_choices_position_picture">
+    <item>Center</item>
+    <item>Upper left</item>
+    <item>Upper right</item>
+    <item>Lower right</item>
+    <item>Lower left</item>
+  </string-array>
+  <string-array name="pref_values_position_picture">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+  </string-array>
+
+  <!-- background settings -->
+  <string name="pref_header_background_thread">Working in background</string>
+
+  <string name="pref_title_background_thread">Change picture in background</string>
+
+</resources>

@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -62,7 +63,14 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
 
   @Override
   public void surfaceCreated (SurfaceHolder holder) {
-    originalBackground = decodeSampledBitmapFromResource (getResources (), R.drawable.bricks, this.getWidth (), this.getHeight ());
+    originalBackground = decodeSampledBitmapFromResource (getResources (), R.drawable.grass, this.getWidth (), this.getHeight ());
+    // rotate the image if it has a different rotation than canvas
+    if (originalBackground.getWidth () < originalBackground.getHeight () && this.getWidth () > this.getHeight () ||
+        originalBackground.getWidth () > originalBackground.getHeight () && this.getWidth () < this.getHeight ()) {
+      Matrix matrix = new Matrix ();
+      matrix.postRotate (90);
+      originalBackground = Bitmap.createBitmap (originalBackground, 0, 0, originalBackground.getWidth (), originalBackground.getHeight (), matrix, true);
+    }
     //originalBackground = BitmapFactory.decodeResource (getResources (), R.drawable.bricks);
     smashingThread = new SmashingThread (holder, context);
     smashingThread.setRunning (true);
@@ -107,9 +115,9 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
       running = false;
     }
 
-    void setRunning (boolean bRun)
+    void setRunning (boolean br)
     {
-      running = bRun;
+      running = br;
     }
 
     @Override
