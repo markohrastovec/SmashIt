@@ -1,0 +1,30 @@
+<resources>
+  <string name="title_activity_settings">Nastavitve</string>
+
+  <!-- picture settings -->
+  <string name="pref_header_picture"></string>
+
+  <string name="pref_title_stretch_proportionally">Proporcionalno raztegni sliko</string>
+  <string name="pref_title_position_picture">Položaj slike</string>
+
+  <string-array name="pref_choices_position_picture">
+    <item>Center</item>
+    <item>Zgoraj levo</item>
+    <item>Zgoraj desno</item>
+    <item>Spodaj desno</item>
+    <item>Spodaj levo</item>
+  </string-array>
+  <string-array name="pref_values_position_picture">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+  </string-array>
+
+  <!-- background settings -->
+  <string name="pref_header_background_thread">Delo v ozadju</string>
+
+  <string name="pref_title_background_thread">Obdeluj sliko v ozadju</string>
+
+</resources>
