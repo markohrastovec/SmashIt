@@ -1,12 +1,14 @@
 package com.smashit.smashit;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -63,6 +65,9 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
 
   @Override
   public void surfaceCreated (SurfaceHolder holder) {
+    SharedPreferences prefs = context.getSharedPreferences ("picture_settings", context.MODE_PRIVATE);
+    boolean stretchPic = prefs.getBoolean ("stretch_picture", true);
+    //TODO: use stretchPic setting
     originalBackground = decodeSampledBitmapFromResource (getResources (), R.drawable.grass, this.getWidth (), this.getHeight ());
     // rotate the image if it has a different rotation than canvas
     if (originalBackground.getWidth () < originalBackground.getHeight () && this.getWidth () > this.getHeight () ||

@@ -1,8 +1,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+      android:title="@string/pref_header_background_thread"
+      android:key="background_thread_settings">
+
     <CheckBoxPreference
         android:key="pref_background_thread"
         android:title="@string/pref_title_background_thread"
         android:defaultValue="false" />
 
+    </PreferenceCategory>
 </PreferenceScreen>

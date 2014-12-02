@@ -4,7 +4,8 @@
   <!-- picture settings -->
   <string name="pref_header_picture">Picture</string>
 
-  <string name="pref_title_stretch_proportionally">Stretch picture proportionally</string>
+  <string name="pref_title_stretch">Scale picture to fit the screen</string>
+  <string name="pref_title_stretch_proportionally">Scale picture proportionally</string>
   <string name="pref_title_position_picture">Position picture</string>
 
   <string-array name="pref_choices_position_picture">
@@ -25,6 +26,6 @@
   <!-- background settings -->
   <string name="pref_header_background_thread">Working in background</string>
 
-  <string name="pref_title_background_thread">Change picture in background</string>
+  <string name="pref_title_background_thread">Work in background</string>
 
 </resources>

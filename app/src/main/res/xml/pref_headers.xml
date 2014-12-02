@@ -10,16 +10,4 @@
         android:fragment="com.smashit.smashit.SettingsActivity$BackgroundThreadPreferenceFragment"
         android:title="@string/pref_header_background_thread" />
 
-    <!-- These settings headers are only used on tablets. -->
-
-    <header
-        android:fragment="com.smashit.smashit.SettingsActivity2$GeneralPreferenceFragment"
-        android:title="@string/pref_header_general" />
-    <header
-        android:fragment="com.smashit.smashit.SettingsActivity2$NotificationPreferenceFragment"
-        android:title="@string/pref_header_notifications" />
-    <header
-        android:fragment="com.smashit.smashit.SettingsActivity2$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync" />
-
 </preference-headers>

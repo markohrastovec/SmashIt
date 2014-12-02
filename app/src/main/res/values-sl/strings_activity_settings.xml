@@ -4,6 +4,7 @@
   <!-- picture settings -->
   <string name="pref_header_picture"></string>
 
+  <string name="pref_title_stretch">Raztegni sliko po celem zaslonu</string>
   <string name="pref_title_stretch_proportionally">Proporcionalno raztegni sliko</string>
   <string name="pref_title_position_picture">Položaj slike</string>
 
