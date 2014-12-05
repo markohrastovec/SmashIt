@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -65,7 +64,7 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
 
   @Override
   public void surfaceCreated (SurfaceHolder holder) {
-    SharedPreferences prefs = context.getSharedPreferences ("picture_settings", context.MODE_PRIVATE);
+    SharedPreferences prefs = context.getSharedPreferences ("picture_settings", Context.MODE_PRIVATE);
     boolean stretchPic = prefs.getBoolean ("stretch_picture", true);
     //TODO: use stretchPic setting
     originalBackground = decodeSampledBitmapFromResource (getResources (), R.drawable.grass, this.getWidth (), this.getHeight ());
