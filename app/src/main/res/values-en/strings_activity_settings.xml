@@ -32,7 +32,7 @@
   </string-array>
 
   <!-- background settings -->
-  <string name="pref_header_background_thread">Working in background</string>
+  <string name="pref_header_background_thread">Advanced</string>
 
   <string name="pref_title_background_thread">Work in background</string>
 

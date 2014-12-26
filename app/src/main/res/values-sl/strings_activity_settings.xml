@@ -2,7 +2,7 @@
   <string name="title_activity_settings">Nastavitve</string>
 
   <!-- picture settings -->
-  <string name="pref_header_picture"></string>
+  <string name="pref_header_picture">Slika</string>
 
   <string name="pref_title_stretch">Raztegni sliko po celem zaslonu</string>
   <string name="pref_title_stretch_proportionally">Proporcionalno raztegni sliko</string>
@@ -32,7 +32,7 @@
   </string-array>
 
   <!-- background settings -->
-  <string name="pref_header_background_thread">Delo v ozadju</string>
+  <string name="pref_header_background_thread">Napredno</string>
 
   <string name="pref_title_background_thread">Obdeluj sliko v ozadju</string>
 
