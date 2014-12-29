@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -127,11 +128,17 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
     int action = event.getAction ();
     switch (action) {
       case MotionEvent.ACTION_DOWN:
-        Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
+        Bitmap cross = BitmapFactory.decodeResource (getResources (), R.drawable.cross);
+        /*Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth (25);
-        paint.setColor (Color.BLACK);
+        paint.setColor (Color.BLACK);*/
         Canvas canvas = new Canvas (smashedBackground);
-        canvas.drawPoint (touched_x * scale_x, touched_y * scale_y, paint);
+        /*canvas.drawPoint (touched_x * scale_x, touched_y * scale_y, paint);*/
+        canvas.drawBitmap (cross, new Rect (0, 0, 100, 100),
+                new Rect ((int)(touched_x * scale_x - cross.getWidth () / 2.0),
+                        (int)(touched_y * scale_y - cross.getHeight () / 2.0),
+                        (int)(touched_x * scale_x + cross.getWidth () / 2.0),
+                        (int)(touched_y * scale_y + cross.getHeight () / 2.0)), null);
         touched = true;
         break;
       case MotionEvent.ACTION_MOVE:
