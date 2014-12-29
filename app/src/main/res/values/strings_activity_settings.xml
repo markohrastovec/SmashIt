@@ -9,6 +9,7 @@
   <string name="pref_title_position_picture">Position picture</string>
 
   <string-array name="pref_choices_position_picture">
+    <item>Manual</item>
     <item>Center</item>
     <item>Upper left</item>
     <item>Upper center</item>
@@ -29,6 +30,7 @@
     <item>6</item>
     <item>7</item>
     <item>8</item>
+    <item>9</item>
   </string-array>
 
   <!-- background settings -->

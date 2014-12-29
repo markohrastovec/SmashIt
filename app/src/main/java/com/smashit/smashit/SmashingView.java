@@ -6,10 +6,13 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -20,6 +23,9 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
   private Bitmap originalBackground;
   private SmashingThread smashingThread;
   Context context;
+
+  volatile float touched_x, touched_y;
+  volatile boolean touched = false;
 
   public SmashingView (Context ctxt, AttributeSet attrs) {
     super (ctxt, attrs);
@@ -104,6 +110,41 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
   void doDraw (Canvas canvas) {
     RectF rect = new RectF (0, 0, canvas.getWidth (), canvas.getHeight ());
     canvas.drawBitmap (originalBackground, null, rect, null);
+
+    if (touched) {
+      Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
+      paint.setStrokeWidth (25);
+      paint.setColor (Color.BLACK);
+      canvas.drawPoint (touched_x, touched_y, paint);
+    }
+  }
+
+  @Override
+  public boolean onTouchEvent (MotionEvent event)
+  {
+    touched_x = event.getX ();
+    touched_y = event.getY ();
+
+    int action = event.getAction ();
+    switch (action) {
+      case MotionEvent.ACTION_DOWN:
+        touched = true;
+        break;
+      case MotionEvent.ACTION_MOVE:
+        touched = true;
+        break;
+      case MotionEvent.ACTION_UP:
+        touched = false;
+        break;
+      case MotionEvent.ACTION_CANCEL:
+        touched = false;
+        break;
+      case MotionEvent.ACTION_OUTSIDE:
+        touched = false;
+        break;
+      default:
+    }
+    return true; //processed
   }
 
   public class SmashingThread extends Thread {

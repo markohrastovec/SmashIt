@@ -90,17 +90,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     // In the simplified UI, fragments are not used at all and we instead
     // use the older PreferenceActivity APIs.
-
-    // Add 'data and sync' preferences, and a corresponding header.
-    //PreferenceCategory fakeHeader = new PreferenceCategory (this);
-    //fakeHeader.setTitle (R.string.pref_header_picture);
-    //getPreferenceScreen ().addPreference (fakeHeader);
     addPreferencesFromResource (R.xml.pref_picture);
-
-    // Add 'notifications' preferences, and a corresponding header.
-    //fakeHeader = new PreferenceCategory (this);
-    //fakeHeader.setTitle (R.string.pref_header_background_thread);
-    //getPreferenceScreen ().addPreference (fakeHeader);
     addPreferencesFromResource (R.xml.pref_background_thread);
 
     // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
