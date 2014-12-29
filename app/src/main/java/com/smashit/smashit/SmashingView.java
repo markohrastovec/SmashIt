@@ -21,8 +21,11 @@ import android.view.SurfaceView;
  */
 public class SmashingView extends SurfaceView implements SurfaceHolder.Callback {
   private Bitmap originalBackground;
+  private Bitmap smashedBackground;
   private SmashingThread smashingThread;
   Context context;
+  float scale_x;
+  float scale_y;
 
   volatile float touched_x, touched_y;
   volatile boolean touched = false;
@@ -81,6 +84,9 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
       matrix.postRotate (90);
       originalBackground = Bitmap.createBitmap (originalBackground, 0, 0, originalBackground.getWidth (), originalBackground.getHeight (), matrix, true);
     }
+    smashedBackground = originalBackground.copy (originalBackground.getConfig (), true);
+    scale_x = (float)smashedBackground.getWidth () / this.getWidth ();
+    scale_y = (float)smashedBackground.getHeight () / this.getHeight ();
     //originalBackground = BitmapFactory.decodeResource (getResources (), R.drawable.bricks);
     smashingThread = new SmashingThread (holder, context);
     smashingThread.setRunning (true);
@@ -109,14 +115,7 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
 
   void doDraw (Canvas canvas) {
     RectF rect = new RectF (0, 0, canvas.getWidth (), canvas.getHeight ());
-    canvas.drawBitmap (originalBackground, null, rect, null);
-
-    if (touched) {
-      Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
-      paint.setStrokeWidth (25);
-      paint.setColor (Color.BLACK);
-      canvas.drawPoint (touched_x, touched_y, paint);
-    }
+    canvas.drawBitmap (smashedBackground, null, rect, null);
   }
 
   @Override
@@ -128,6 +127,11 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
     int action = event.getAction ();
     switch (action) {
       case MotionEvent.ACTION_DOWN:
+        Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
+        paint.setStrokeWidth (25);
+        paint.setColor (Color.BLACK);
+        Canvas canvas = new Canvas (smashedBackground);
+        canvas.drawPoint (touched_x * scale_x, touched_y * scale_y, paint);
         touched = true;
         break;
       case MotionEvent.ACTION_MOVE:
