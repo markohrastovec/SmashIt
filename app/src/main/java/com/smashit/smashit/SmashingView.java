@@ -6,9 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -177,7 +175,7 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
     }
 
     @Override
-    public void run() {
+    public void run () {
       super.run ();
       while (running) {
         canvas = surfaceHolder.lockCanvas ();

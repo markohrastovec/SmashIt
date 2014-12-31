@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".SmashingActivity">
+  <item android:id="@+id/menu_hammer" android:title="@string/menu_hammer" android:orderInCategory="100"
+        android:showAsAction="never" />
+  <item android:id="@+id/menu_jigsaw" android:title="@string/menu_jigsaw" android:orderInCategory="100"
+        android:showAsAction="never" />
+</menu>
