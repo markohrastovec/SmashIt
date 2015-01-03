@@ -1,64 +1,68 @@
 package com.smashit.smashit;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
+import android.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 public class SmashingActivity extends Activity {
-  private static final int MENU_HAMMER = 1;
-  private static final int MENU_JIGSAW = 2;
+  private DrawerLayout drawerLayout;
+  private ListView weaponsList;
+  private String[] weapons;
+  private CharSequence drawerTitle;
+  private CharSequence menuTitle;
 
   @Override
   protected void onCreate (Bundle savedInstanceState) {
     super.onCreate (savedInstanceState);
     setContentView (R.layout.activity_smashing);
+
+    weapons = getResources ().getStringArray (R.array.weapons_array);
+    drawerLayout = (DrawerLayout)findViewById (R.id.drawer_layout);
+    weaponsList = (ListView)findViewById (R.id.weapons_drawer);
+
+    weaponsList.setAdapter (new ArrayAdapter<String> (this, R.layout.drawer_list_item, weapons));
+    weaponsList.setOnItemClickListener (new DrawerItemClickListener ());
+  }
+
+  private class DrawerItemClickListener implements ListView.OnItemClickListener {
+    @Override
+    public void onItemClick (AdapterView parent, View view, int position, long id) {
+      selectItem (position);
+    }
   }
 
   /**
-   * Invoked during init to give the Activity a chance to set up its Menu.
-   *
-   * @param menu the Menu to which entries may be added
-   * @return true
+   * Swaps fragments in the main content view
    */
-  @Override
-  public boolean onCreateOptionsMenu (Menu menu) {
-    getMenuInflater ().inflate (R.menu.menu_main, menu);
-    return true;
+  private void selectItem (int position) {
+    // Create a new fragment and specify the planet to show based on position
+    /*Fragment fragment = new PlanetFragment ();
+    Bundle args = new Bundle ();
+    args.putInt (PlanetFragment.ARG_PLANET_NUMBER, position);
+    fragment.setArguments (args);
 
-    /*super.onCreateOptionsMenu (menu);
+    // Insert the fragment by replacing any existing fragment
+    FragmentManager fragmentManager = getFragmentManager ();
+    fragmentManager.beginTransaction ()
+            .replace (R.id.content_frame, fragment)
+            .commit ();*/
 
-    menu.add (0, MENU_HAMMER, 0, R.string.menu_hammer);
-    menu.add (0, MENU_JIGSAW, 0, R.string.menu_jigsaw);
-    return true;*/
+    // Highlight the selected item, update the title, and close the drawer
+    weaponsList.setItemChecked (position, true);
+    setTitle (weapons[position]);
+    drawerLayout.closeDrawer (weaponsList);
   }
 
-  /**
-   * Invoked when the user selects an item from the Menu.
-   *
-   * @param item the Menu entry which was selected
-   * @return true if the Menu item was legit (and we consumed it), false
-   *         otherwise
-   */
   @Override
-  public boolean onOptionsItemSelected (MenuItem item) {
-    int id = item.getItemId ();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.menu_hammer) {
-    }
-    else if (id == R.id.menu_jigsaw) {
-    }
-
-    return super.onOptionsItemSelected (item);
-
-    /*switch (item.getItemId ()) {
-      case MENU_HAMMER:
-        return true;
-      case MENU_JIGSAW:
-        return true;
-    }
-    return false;*/
+  public void setTitle (CharSequence title) {
+    menuTitle = title;
+    //getActionBar ().setTitle (menuTitle);
   }
 }

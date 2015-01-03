@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="menu_hammer">Hammer</string>
-  <string name="menu_jigsaw">Jigsaw</string>
+  <string-array name="weapons_array">
+    <item>Hammer</item>
+    <item>Jigsaw</item>
+  </string-array>
 </resources>

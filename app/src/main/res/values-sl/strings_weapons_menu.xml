@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="menu_hammer">Kladivo</string>
-  <string name="menu_jigsaw">Žaga</string>
+  <string-array name="weapons_array">
+    <item>Kladivo</item>
+    <item>Žaga</item>
+  </string-array>
 </resources>
