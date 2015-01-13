@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -22,16 +23,23 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
   private Bitmap originalBackground;
   private Bitmap smashedBackground;
   private SmashingThread smashingThread;
+  private int currentWeapon;
   Context context;
   float scale_x;
   float scale_y;
 
+  float start_x, start_y;
+
   volatile float touched_x, touched_y;
   volatile boolean touched = false;
+
+  final public int WEAPON_HAMMER = 0;
+  final public int WEAPON_JIGSAW = 1;
 
   public SmashingView (Context ctxt, AttributeSet attrs) {
     super (ctxt, attrs);
     context = ctxt;
+    currentWeapon = 0;
     getHolder ().addCallback (this);
   }
 
@@ -124,36 +132,51 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
     touched_y = event.getY ();
 
     int action = event.getAction ();
+    Canvas canvas = new Canvas (smashedBackground);
     switch (action) {
       case MotionEvent.ACTION_DOWN:
-        Bitmap cross = BitmapFactory.decodeResource (getResources (), R.drawable.cross);
-        //Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
-        //paint.setStrokeWidth (25);
-        //paint.setColor (Color.BLACK);
-        Canvas canvas = new Canvas (smashedBackground);
-        //canvas.drawPoint (touched_x * scale_x, touched_y * scale_y, paint);
-        canvas.drawBitmap (cross, new Rect (0, 0, 100, 100),
-                new Rect ((int)(touched_x * scale_x - cross.getWidth () / 2.0),
-                        (int)(touched_y * scale_y - cross.getHeight () / 2.0),
-                        (int)(touched_x * scale_x + cross.getWidth () / 2.0),
-                        (int)(touched_y * scale_y + cross.getHeight () / 2.0)), null);
-        touched = true;
+        switch (currentWeapon) {
+          case WEAPON_HAMMER:
+            Bitmap cross = BitmapFactory.decodeResource (getResources (), R.drawable.cross);
+            //Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
+            //paint.setStrokeWidth (25);
+            //paint.setColor (Color.BLACK);
+            //canvas.drawPoint (touched_x * scale_x, touched_y * scale_y, paint);
+            canvas.drawBitmap (cross, new Rect (0, 0, 100, 100),
+                    new Rect ((int)(touched_x * scale_x - cross.getWidth () / 2.0),
+                            (int)(touched_y * scale_y - cross.getHeight () / 2.0),
+                            (int)(touched_x * scale_x + cross.getWidth () / 2.0),
+                            (int)(touched_y * scale_y + cross.getHeight () / 2.0)), null);
+            break;
+          case WEAPON_JIGSAW:
+            start_x = touched_x;
+            start_y = touched_y;
+            break;
+        }
         break;
       case MotionEvent.ACTION_MOVE:
-        touched = true;
+        switch (currentWeapon) {
+          case WEAPON_JIGSAW:
+            canvas.drawLine ((int)(start_x * scale_x), (int)(start_y * scale_y), (int)(touched_x * scale_x), (int)(touched_y * scale_y), new Paint ());
+            start_x = touched_x;
+            start_y = touched_y;
+            break;
+        }
         break;
       case MotionEvent.ACTION_UP:
-        touched = false;
         break;
       case MotionEvent.ACTION_CANCEL:
-        touched = false;
         break;
       case MotionEvent.ACTION_OUTSIDE:
-        touched = false;
         break;
       default:
     }
     return true; //processed
+  }
+
+  public void setCurrentWeapon (int weapon)
+  {
+    currentWeapon = weapon;
   }
 
   public class SmashingThread extends Thread {

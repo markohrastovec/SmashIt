@@ -29,6 +29,8 @@ public class SmashingActivity extends Activity {
 
     weaponsList.setAdapter (new ArrayAdapter<String> (this, R.layout.drawer_list_item, weapons));
     weaponsList.setOnItemClickListener (new DrawerItemClickListener ());
+
+    openWeaponsMenu ();
   }
 
   private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -38,31 +40,26 @@ public class SmashingActivity extends Activity {
     }
   }
 
+  private void openWeaponsMenu ()
+  {
+    drawerLayout.openDrawer (weaponsList);
+  }
+
   /**
    * Swaps fragments in the main content view
    */
   private void selectItem (int position) {
-    // Create a new fragment and specify the planet to show based on position
-    /*Fragment fragment = new PlanetFragment ();
-    Bundle args = new Bundle ();
-    args.putInt (PlanetFragment.ARG_PLANET_NUMBER, position);
-    fragment.setArguments (args);
-
-    // Insert the fragment by replacing any existing fragment
-    FragmentManager fragmentManager = getFragmentManager ();
-    fragmentManager.beginTransaction ()
-            .replace (R.id.content_frame, fragment)
-            .commit ();*/
-
     // Highlight the selected item, update the title, and close the drawer
     weaponsList.setItemChecked (position, true);
-    setTitle (weapons[position]);
+    //setTitle (weapons[position]);
     drawerLayout.closeDrawer (weaponsList);
+    SmashingView v = (SmashingView)this.findViewById (R.id.smashing_view);
+    if (v != null) v.setCurrentWeapon (position);
   }
 
-  @Override
-  public void setTitle (CharSequence title) {
-    menuTitle = title;
-    //getActionBar ().setTitle (menuTitle);
-  }
+  //@Override
+  //public void setTitle (CharSequence title) {
+  //  menuTitle = title;
+  //  //getActionBar ().setTitle (menuTitle);
+  //}
 }
