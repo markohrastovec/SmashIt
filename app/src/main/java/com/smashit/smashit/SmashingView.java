@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -23,6 +24,7 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
   private Bitmap originalBackground;
   private Bitmap smashedBackground;
   private SmashingThread smashingThread;
+  private GestureDetector mDetector;
   private int currentWeapon;
   Context context;
   float scale_x;
@@ -41,6 +43,7 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
     context = ctxt;
     currentWeapon = 0;
     getHolder ().addCallback (this);
+    mDetector = new GestureDetector (this.getContext (), new MyGestureListener());
   }
 
   public static int calculateInSampleSize (BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -126,52 +129,92 @@ public class SmashingView extends SurfaceView implements SurfaceHolder.Callback 
   }
 
   @Override
-  public boolean onTouchEvent (MotionEvent event)
-  {
-    touched_x = event.getX ();
-    touched_y = event.getY ();
+  public boolean onTouchEvent (MotionEvent event){
+    this.mDetector.onTouchEvent (event);
+    return super.onTouchEvent (event);
+  }
 
-    int action = event.getAction ();
-    Canvas canvas = new Canvas (smashedBackground);
-    switch (action) {
-      case MotionEvent.ACTION_DOWN:
-        switch (currentWeapon) {
-          case WEAPON_HAMMER:
-            Bitmap cross = BitmapFactory.decodeResource (getResources (), R.drawable.cross);
-            //Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
-            //paint.setStrokeWidth (25);
-            //paint.setColor (Color.BLACK);
-            //canvas.drawPoint (touched_x * scale_x, touched_y * scale_y, paint);
-            canvas.drawBitmap (cross, new Rect (0, 0, 100, 100),
-                    new Rect ((int)(touched_x * scale_x - cross.getWidth () / 2.0),
-                            (int)(touched_y * scale_y - cross.getHeight () / 2.0),
-                            (int)(touched_x * scale_x + cross.getWidth () / 2.0),
-                            (int)(touched_y * scale_y + cross.getHeight () / 2.0)), null);
-            break;
-          case WEAPON_JIGSAW:
-            start_x = touched_x;
-            start_y = touched_y;
-            break;
-        }
-        break;
-      case MotionEvent.ACTION_MOVE:
-        switch (currentWeapon) {
-          case WEAPON_JIGSAW:
-            canvas.drawLine ((int)(start_x * scale_x), (int)(start_y * scale_y), (int)(touched_x * scale_x), (int)(touched_y * scale_y), new Paint ());
-            start_x = touched_x;
-            start_y = touched_y;
-            break;
-        }
-        break;
-      case MotionEvent.ACTION_UP:
-        break;
-      case MotionEvent.ACTION_CANCEL:
-        break;
-      case MotionEvent.ACTION_OUTSIDE:
-        break;
-      default:
+  class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+    private static final String DEBUG_TAG = "Gestures";
+
+    @Override
+    public boolean onSingleTapUp (MotionEvent event) {
+/*      touched_x = event.getX ();
+      touched_y = event.getY ();
+
+      Canvas canvas = new Canvas (smashedBackground);
+      switch (currentWeapon) {
+        case WEAPON_HAMMER:
+          Bitmap cross = BitmapFactory.decodeResource (getResources (), R.drawable.cross);
+          //Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
+          //paint.setStrokeWidth (25);
+          //paint.setColor (Color.BLACK);
+          //canvas.drawPoint (touched_x * scale_x, touched_y * scale_y, paint);
+          canvas.drawBitmap (cross, new Rect (0, 0, 100, 100),
+                  new Rect ((int)(touched_x * scale_x - cross.getWidth () / 2.0),
+                          (int)(touched_y * scale_y - cross.getHeight () / 2.0),
+                          (int)(touched_x * scale_x + cross.getWidth () / 2.0),
+                          (int)(touched_y * scale_y + cross.getHeight () / 2.0)), null);
+          break;
+        case WEAPON_JIGSAW:
+          //start_x = touched_x;
+          //start_y = touched_y;
+          break;
+      }*/
+      Log.d (DEBUG_TAG,"onDown: " + event.toString ());
+      return true;
     }
-    return true; //processed
+
+    @Override
+    public boolean onFling (MotionEvent event1, MotionEvent event2,
+                            float velocityX, float velocityY) {
+/*      touched_x = event.getX ();
+      touched_y = event.getY ();
+
+      int action = event.getAction ();
+      Canvas canvas = new Canvas (smashedBackground);
+      switch (action) {
+        case MotionEvent.ACTION_DOWN:
+          switch (currentWeapon) {
+            case WEAPON_HAMMER:
+              Bitmap cross = BitmapFactory.decodeResource (getResources (), R.drawable.cross);
+              //Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
+              //paint.setStrokeWidth (25);
+              //paint.setColor (Color.BLACK);
+              //canvas.drawPoint (touched_x * scale_x, touched_y * scale_y, paint);
+              canvas.drawBitmap (cross, new Rect (0, 0, 100, 100),
+                      new Rect ((int)(touched_x * scale_x - cross.getWidth () / 2.0),
+                              (int)(touched_y * scale_y - cross.getHeight () / 2.0),
+                              (int)(touched_x * scale_x + cross.getWidth () / 2.0),
+                              (int)(touched_y * scale_y + cross.getHeight () / 2.0)), null);
+              break;
+            case WEAPON_JIGSAW:
+              start_x = touched_x;
+              start_y = touched_y;
+              break;
+          }
+          break;
+        case MotionEvent.ACTION_MOVE:
+          switch (currentWeapon) {
+            case WEAPON_JIGSAW:
+              canvas.drawLine ((int)(start_x * scale_x), (int)(start_y * scale_y), (int)(touched_x * scale_x), (int)(touched_y * scale_y), new Paint ());
+              start_x = touched_x;
+              start_y = touched_y;
+              break;
+          }
+          break;
+        case MotionEvent.ACTION_UP:
+          break;
+        case MotionEvent.ACTION_CANCEL:
+          break;
+        case MotionEvent.ACTION_OUTSIDE:
+          break;
+        default:
+      }
+      return true; //processed*/
+      Log.d (DEBUG_TAG, "onFling: " + event1.toString () + event2.toString ());
+      return true;
+    }
   }
 
   public void setCurrentWeapon (int weapon)
